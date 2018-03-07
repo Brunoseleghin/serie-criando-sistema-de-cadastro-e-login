@@ -49,8 +49,7 @@ class User extends \HXPHP\System\Model
     
         $role = Role::find_by_role('user');
 	
-        if (is_null($role)) 
-        {
+        if (is_null($role)) {
             array_push($callbackObj->errors, 'A role user não existe. Contate o administrador');
             return $callbackObj;
         }
@@ -67,8 +66,7 @@ class User extends \HXPHP\System\Model
 
         $cadastrar = self::create($post);
 
-        if ($cadastrar->is_valid()) 
-        {
+        if ($cadastrar->is_valid()) {
             $callbackObj->user = $cadastrar;
             $callbackObj->status = true;
             return $callbackObj;
@@ -76,8 +74,7 @@ class User extends \HXPHP\System\Model
                 
         $errors = $cadastrar->errors->get_raw_errors();
                 
-        foreach ($errors as $field => $message) 
-        {
+        foreach ($errors as $field => $message) {
             array_push($callbackObj->errors, $message[0]);
         }
           
@@ -88,17 +85,25 @@ class User extends \HXPHP\System\Model
     {
         $user = self::find_by_username($post['username']);
         
-        if(!is_null($user)) 
-        {
+        if(!is_null($user)) {
             $password = \HXPHP\System\Tools::hashHX($post['password'], $user->salt);
-            
-            if(LoginAttempt::ExistemTentativas($user->id)) {
-              if ($password['password'] === $user->password) {
-                LoginAttempt::LimparTentativas($user->id);
-              } 
-            } else {
-                LoginAttempt::RegistrarTentativa($user->id);
+            if ($user->status === 1){
+                if(LoginAttempt::ExistemTentativas($user->id)) {
+                    if ($password['password'] === $user->password) {
+
+                        var_dump('logado');
+                        LoginAttempt::LimparTentativas($user->id);
+                    } 
+                    else {
+                        LoginAttempt::RegistrarTentativa($user->id);
+                    }
+                }
+                else {
+                    $user->status = 0;
+                    $user->save(false);
+                }
             }
+
         }
     }
 }

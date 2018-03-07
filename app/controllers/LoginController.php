@@ -21,9 +21,8 @@ class LoginController extends \HXPHP\System\Controller
             
         $post = $this->request->post();
             
-        if (!empty($post)) 
-        {
-                
+        if (!empty($post)) {
+            User::login($post);
         }
     }
 }
