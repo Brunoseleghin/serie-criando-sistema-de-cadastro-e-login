@@ -2,26 +2,39 @@
 
 class CadastroController extends \HXPHP\System\Controller
 {
-	public function cadastrarAction()
-	{
-		$this->view->setFile('index');
+    public function __construct($configs)
+    {
+        parent::__construct($configs);
+        
+        $this->load('Services\Auth',
+                $configs->auth->after_login,
+                $configs->auth->after_logout,
+                true
+        );
+        
+        $this->auth->redirectCheck(false);
+    }
 
-		$this->request->setCustomFilters(array(
-			'email' => FILTER_VALIDATE_EMAIL
-		));
+    public function cadastrarAction()
+    {
+    $this->view->setFile('index');
 
-		$post = $this->request->post();
+    $this->request->setCustomFilters(array(
+        'email' => FILTER_VALIDATE_EMAIL
+        ));
 
-		if (!empty($post)) {
-			$cadastrarUsuario = User::cadastrar($post);
+        $post = $this->request->post();
 
-			if ($cadastrarUsuario->status === false) {
-				$this->load('Helpers\Alert', array(
-					'danger',
-					'Ops! Não foi possível efetuar seu cadastro. <br> Verifique os erros abaixo:',
-					$cadastrarUsuario->errors
-				));
-			}
-		}
-	}
+        if (!empty($post)) {
+            $cadastrarUsuario = User::cadastrar($post);
+
+        if ($cadastrarUsuario->status === false) {
+            $this->load('Helpers\Alert', array(
+                'danger',
+                'Ops! Não foi possível efetuar seu cadastro. <br> Verifique os erros abaixo:',
+            $cadastrarUsuario->errors
+            ));
+            }
+        }
+    }
 }

@@ -9,8 +9,8 @@
 	$configs->env->development->database->setConnectionData(array(
 		'host' => 'localhost',
 		'user' => 'root',
-		'password' => '',
-		'dbname' => 'sistemahx'
+		'password' => 'brunodaniel53520',
+		'dbname' => 'sistemahxb'
 	));
 
         $configs->env->development->auth->setURLs('/sistema/home/', '/sistema/login/');
