@@ -83,6 +83,11 @@ class User extends \HXPHP\System\Model
     
     public static function login(array $post)
     {
+        $callbackObj = new \stdClass;
+        $callbackObj->user = null;
+        $callbackObj->status = false;
+        $callbackObj->code = null;
+        
         $user = self::find_by_username($post['username']);
         
         if(!is_null($user)) {
@@ -90,20 +95,27 @@ class User extends \HXPHP\System\Model
             if ($user->status === 1){
                 if(LoginAttempt::ExistemTentativas($user->id)) {
                     if ($password['password'] === $user->password) {
-
-                        var_dump('logado');
+                        $callbackObj->user = $user;
+                        $callbackObj->status = true;
                         LoginAttempt::LimparTentativas($user->id);
                     } 
                     else {
+                        $callbackObj->code = 'dados-incorretos';
                         LoginAttempt::RegistrarTentativa($user->id);
                     }
                 }
                 else {
+                    $callbackObj->code = 'usuario-bloqueado';
                     $user->status = 0;
                     $user->save(false);
-                }
+                }  
             }
-
+            else {
+                $callbackObj->code = 'usuario-bloqueado';
+            }
+        }
+        else {
+            $callbackObj->code = 'usuario-inexistente';
         }
     }
 }
