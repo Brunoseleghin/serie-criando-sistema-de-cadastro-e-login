@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/sistema/src/HXPHP/System/Configs/Modules/Auth.php</file>
+            <file>file:/C:/xampp/htdocs/sistema/templates/Modules/Messages/auth.json</file>
+            <file>file:/C:/xampp/htdocs/sistema/app/models/LoginAttempt.php</file>
             <file>file:/C:/xampp/htdocs/sistema/app/models/User.php</file>
-            <file>file:/C:/xampp/htdocs/sistema/app/views/Cadastro/index.phtml</file>
+            <file>file:/C:/xampp/htdocs/sistema/app/views/Login/index.phtml</file>
             <file>file:/C:/xampp/htdocs/sistema/app/controllers/CadastroController.php</file>
+            <file>file:/C:/xampp/htdocs/sistema/app/controllers/LoginController.php</file>
         </group>
     </open-files>
 </project-private>
